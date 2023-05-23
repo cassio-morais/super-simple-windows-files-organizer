@@ -104,6 +104,7 @@
         static bool FileExtensionNotAllowed(string fileExtension)
         {
             if(fileExtension == ".lnk" || 
+                fileExtension == ".ini" || 
                 fileExtension == ".url")
                     return true;
 
