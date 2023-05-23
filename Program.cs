@@ -79,26 +79,36 @@
                     Directory.CreateDirectory(fullPathByExtension);
                     string destinationFile = Path.Combine(fullPathByExtension, fileName);
 
-                    if(File.Exists(destinationFile))
-                    {
-                        var temp = destinationFile.Replace(fileExtension, "_");
-                        destinationFile = temp + fileExtension;
-                    }
+                    destinationFile = FileExistsGuard(fileExtension, destinationFile);
                     
                     File.Move(file, destinationFile, false);
 
                     Console.WriteLine("[MODE EXTENSION] Moved file: " + fileName + " to: " + fullPathByExtension);
 
-                }else
+                }
+                else
                 {
-                    
                     Directory.CreateDirectory(destinationPath);
                     string destinationFile = Path.Combine(destinationPath, fileName);
+
+                    destinationFile = FileExistsGuard(fileExtension, destinationFile);
+
                     File.Move(file, destinationFile, false);
 
-                     Console.WriteLine("[MODE KEEP FOLDER STRUCTURE] Moved file: " + fileName + " to: " + destinationPath);
+                    Console.WriteLine("[MODE KEEP FOLDER STRUCTURE] Moved file: " + fileName + " to: " + destinationPath);
                 }
             }
+        }
+
+        private static string FileExistsGuard(string fileExtension, string destinationFile)
+        {
+            if (File.Exists(destinationFile))
+            {
+                var temp = destinationFile.Replace(fileExtension, "_");
+                destinationFile = temp + fileExtension;
+            }
+            
+            return destinationFile;
         }
 
         static bool FileExtensionNotAllowed(string fileExtension)
@@ -110,6 +120,8 @@
 
             return false;
         }
+
+        static 
     }
 
     enum PathOrganizationMode
