@@ -120,8 +120,6 @@
 
             return false;
         }
-
-        static 
     }
 
     enum PathOrganizationMode
