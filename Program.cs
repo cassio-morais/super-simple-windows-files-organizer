@@ -60,6 +60,9 @@
                 var filesInFolder = Directory.GetFiles(folder, "*", SearchOption.TopDirectoryOnly);
 
                 CopyLooseFiles(fullFoldersDestinationPath, filesInFolder, PathOrganizationMode.KeepFolderStructure);
+
+                if(!filesInFolder.Any() && !Directory.GetDirectories(folder).Any())
+                    Directory.Delete(folder);
             }
         }
 
@@ -114,7 +117,6 @@
         static bool FileExtensionNotAllowed(string fileExtension)
         {
             if(fileExtension == ".lnk" || 
-                fileExtension == ".ini" || 
                 fileExtension == ".url")
                     return true;
 
